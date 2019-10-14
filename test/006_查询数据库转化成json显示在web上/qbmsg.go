@@ -10,6 +10,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+var db = &sql.DB{}
+
+func init() {
+	//	db, _ = sql.Open("mysql", "root:root@/worddb")
+	db, _ = sql.Open("mysql", "euser:tjqm4912@tcp(104.238.149.37:3306)/worddb")
+}
+
 var p = fmt.Println
 
 func check(err error) {
@@ -18,57 +25,46 @@ func check(err error) {
 	}
 
 }
-
+func qq(s string) string {
+	Ks := ""
+	var html string
+	var tf bool
+	//方式1 query 查询数据
+	rows, _ := db.Query("SELECT * FROM enwords where word=?", s)
+	defer rows.Close()
+	for rows.Next() {
+		var word, translation, mp3src string
+		if err := rows.Scan(&word, &translation, &mp3src); err != nil {
+			log.Fatal(err)
+		}
+		my := `{"word":"` + word + `","translation":"` + translation + `","mp3src":"` + mp3src + `"},`
+		Ks += my
+		tf = true
+	}
+	//fmt.Println(Ks)
+	if tf {
+		josna := `{"cmd": "allword","aks": 200,"data": [`
+		end := "]}"
+		myjosn := josna + Ks[:len(Ks)-1] + end
+		html = "myjson(" + myjosn + ")"
+	} else {
+		html = `{"aks": 200}`
+	}
+	return html
+}
 func main() {
 	//"用户名:密码@[连接方式](主机名:端口号)/数据库名"
-	db, err := sql.Open("mysql", "hvp:huvip4912@(127.0.0.1:3306)/msg")
-	check(err)
 
 	var html string
 	r := gin.Default()
-	r.GET("/allmsg/:formid/:toid/:token", func(c *gin.Context) {
+	r.GET("/search/:q/", func(c *gin.Context) {
 
-		formid := c.Param("formid")
-		toid := c.Param("toid")
-		token := c.Param("token")
+		q := c.Param("q")
 
-		if formid != "" && token != "" {
-
-			Ks := ""
-			var tf bool
-
-			//方式1 query 查询数据
-			rows, _ := db.Query("SELECT id,t_msg,add_time,f_id FROM webim_msg  where (f_id=? and t_id=?) or (f_id=? and t_id=?) ORDER BY `id` ASC ", formid, toid, toid, formid)
-			defer rows.Close()
-			for rows.Next() {
-				var id, t_msg, add_time, f_id string
-				if err := rows.Scan(&id, &t_msg, &add_time, &f_id); err != nil {
-					log.Fatal(err)
-				}
-				my := `{"msgid":"` + id + `","msg":"` + t_msg + `","time":"` + add_time + `","form":"` + f_id + `"},`
-				Ks += my
-				//fmt.Println(Ks)
-				tf = true
-			}
-			if tf {
-				josna := `{"cmd": "allmsg","aks": 200,"msg": [`
-				end := "]}"
-				myjosn := josna + Ks[:len(Ks)-1] + end
-				//fmt.Println(myjosn)
-				//str := strings.Replace(myjosn, " ", "", -1)
-				// 去除换行符
-				//strn := strings.Replace(myjosn, "\n", "\r", -1)
-				//print(str)
-				html = "myjson(" + myjosn + ")"
-				//	return myjosn
-			} else {
-				html = `myjson({"aks":100})`
-			}
-
-		} else {
-			html = `myjson({"aks":300})`
+		if q != "" {
+			html = qq(q)
 		}
 		c.String(http.StatusOK, html)
 	})
-	r.Run(":8888") // listen and serve on 0.0.0.0:8080
+	r.Run(":81") // listen and serve on 0.0.0.0:8080
 }

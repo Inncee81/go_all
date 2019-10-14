@@ -14,7 +14,8 @@ import (
 var db = &sql.DB{}
 
 func init() {
-	db, _ = sql.Open("mysql", "root:root@/worddb")
+	db, _ = sql.Open("mysql", "root:tj4912.huvip@tcp(104.238.149.37:3306)/worddb")
+	//	db, _ = sql.Open("mysql", "root:root@/worddb")
 	//db, _ = sql.Open("mysql", "hvp:huvip4912@tcp(149.28.27.116:3306)/msg")
 }
 
