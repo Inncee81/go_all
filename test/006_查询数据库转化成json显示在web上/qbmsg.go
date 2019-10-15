@@ -48,7 +48,7 @@ func qq(s string) string {
 		myjosn := josna + Ks[:len(Ks)-1] + end
 		html = "myjson(" + myjosn + ")"
 	} else {
-		html = `{"aks": 200}`
+		html = `myjson({"aks": 200})`
 	}
 	return html
 }
@@ -66,5 +66,5 @@ func main() {
 		}
 		c.String(http.StatusOK, html)
 	})
-	r.Run(":81") // listen and serve on 0.0.0.0:8080
+	r.Run(":89") // listen and serve on 0.0.0.0:8080
 }
