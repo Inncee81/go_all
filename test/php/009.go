@@ -10,12 +10,11 @@ import (
 
 //数组-创建一个数组
 func Array(v ...interface{}) []interface{} {
-
 	return v
 }
 
-// InArray in_array()
-// haystack supported types: slice, array or map
+// InArray in_Array()
+// haystack supported types: slice, Array or map
 func InArray(needle interface{}, haystack interface{}) bool {
 	val := reflect.ValueOf(haystack)
 	switch val.Kind() {
@@ -32,7 +31,7 @@ func InArray(needle interface{}, haystack interface{}) bool {
 			}
 		}
 	default:
-		panic("haystack: haystack type muset be slice, array or map")
+		panic("haystack: haystack type muset be slice, Array or map")
 	}
 
 	return false
@@ -130,8 +129,11 @@ func Exec(s string) {
 
 func main() {
 	a := Array("d", "sdaf", "df")
+	aa := [...]string{"a", "b", "c", "d"}
 	people := Array(12, "Steve", "Mark", "David")
-
+	/* 向切片添加一个元素 */
+	aa = append(aa, "aa")
+	fmt.Println(aa)
 	if InArray(1, people) {
 		fmt.Println("匹配已找到")
 	} else {
@@ -150,4 +152,6 @@ func main() {
 		fmt.Println("Error: ", err)
 	}
 	fmt.Println(c.Output())
+	cars := Array(Array("Volvo", 22, 18), Array("BMW", 15, 13), Array("Saab", 5, 2), Array("Land Rover", 17, 15))
+	fmt.Println(cars[0])
 }

@@ -1,9 +1,9 @@
-package main
 
 import (
 	"fmt"
 
-	. "../../private"
+	. "package main
+../../private"
 	"github.com/chain-zhang/pinyin"
 )
 
