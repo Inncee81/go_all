@@ -13,7 +13,6 @@ var db = &sql.DB{}
 
 func init() {
 	//	db, _ = sql.Open("mysql", "root:root@/worddb")
-	db, _ = sql.Open("mysql", "euser:tjqm4912@tcp(104.238.149.37:3306)/worddb")
 }
 func update(mp3src, dc string) {
 	start := time.Now()

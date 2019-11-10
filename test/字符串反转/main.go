@@ -1,21 +1,15 @@
-package main
+ package main
 
 import (
 	"fmt"
 	"time"
 )
-
 func main() {
-	var a int
-	var b, c, d int
-	var bb, cc, dd string
-	bbb, ccc, ddd := 111, 222, 333
-	fmt.Println("数字", a, b, c, d)
-	fmt.Println("字符", bb, cc, dd)
-	if bb == "" && cc == "" && dd == "" {
-		fmt.Println("bb cc dd is not")
-	}
-	fmt.Println(bbb, ccc, ddd)
+
+
+
+
+
 
 	s := "packagevarfunc"
 	ss := []byte(s)
@@ -28,7 +22,6 @@ func main() {
 	start := time.Now()
 	end := time.Now()
 	fmt.Println("time:", end.Sub(start).Seconds())
-	for i:=0;i<100;i++{
 	fmt.Println(Fstr(` 1.png
 Notes to Foreigners Applying for Residence Permit for Study and Extension
 read_image.png
@@ -61,7 +54,6 @@ More >>
 What is your expectations for governmental website? What kinds of content should eBeijing have? What services are you interested in?`))
 	}	
 
-}
 //字符串反转
 func Fstr(s string) string {
 	flen := len(s) - 1
