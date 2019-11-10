@@ -14,7 +14,17 @@ var db = &sql.DB{}
 func init() {
 	//	db, _ = sql.Open("mysql", "root:root@/worddb")
 	db, _ = sql.Open("mysql", "euser:tjqm4912@tcp(104.238.149.37:3306)/worddb")
-	//db, _ = sql.Open("mysql", "hvp:huvip4912@tcp(149.28.27.116:3306)/msg")
+}
+func update(mp3src, dc string) {
+	start := time.Now()
+	//方式3 update
+	stm, _ := db.Prepare("UPdate enwords set mp3src=? where word=?")
+	stm.Exec(mp3src, dc)
+	stm.Close()
+	//	p(mp3src)
+	end := time.Now()
+	fmt.Println("update time:", end.Sub(start).Seconds())
+
 }
 func q(s string) string {
 	Ks := ""
@@ -43,25 +53,7 @@ func q(s string) string {
 	}
 	return html
 }
-func query(dc string) bool {
 
-	//方式1 query
-	start := time.Now()
-	rows, _ := db.Query("SELECT word FROM enwords where word=?", dc)
-	// select * from enwords where locate('v.', translation)&& not locate('adv.', translation)
-	defer rows.Close()
-	for rows.Next() {
-		var word string
-		if err := rows.Scan(&word); err != nil {
-			log.Fatal(err)
-		}
-		return true
-		//	fmt.Printf("word:%s", word)
-	}
-	end := time.Now()
-	fmt.Println("query time:", end.Sub(start).Seconds())
-	return false
-}
 func main() {
 	fmt.Println(query("a"))
 	fmt.Println(q("a"))
