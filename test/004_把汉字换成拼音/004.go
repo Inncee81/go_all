@@ -1,9 +1,9 @@
-package main
 
 import (
 	"fmt"
 
-	. "../../private"
+	. "package main
+../../private"
 	"github.com/chain-zhang/pinyin"
 )
 
@@ -28,6 +28,7 @@ func main() {
 		// 错误处理
 	} else {
 		fmt.Println(str+"\n")
+		W_file("py",str)
 	}
 
 	str, err = pinyin.New(q).Convert()

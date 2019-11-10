@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"time"
+	_"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -26,6 +26,7 @@ func update(mp3src, dc string) {
 	fmt.Println("update time:", end.Sub(start).Seconds())
 
 }
+<<<<<<< HEAD
 func q(s string) string {
 	Ks := ""
 	var html string
@@ -54,7 +55,34 @@ func q(s string) string {
 	return html
 }
 
+=======
+func update(mp3src, dc string) {
+	//方式3 update
+	stm, _ := db.Prepare("UPdate enwords set mp3src=? where word=?")
+	stm.Exec(mp3src, dc)
+	stm.Close()
+	//	p(mp3src)
+
+}
+func query() {
+	i := 0
+	//方式1 query
+	rows, _ := db.Query("SELECT word FROM enwords where mp3src is NULL")
+	// select * from enwords where locate('v.', translation)&& not locate('adv.', translation)
+	defer rows.Close()
+	for rows.Next() {
+		var word string
+		if err := rows.Scan(&word); err != nil {
+			log.Fatal(err)
+		}
+		i++
+		fmt.Println(word)
+		update("",word)
+	}
+	fmt.Println(i)
+}
+
+>>>>>>> c4889c8c845dff14412cc2b43cfc1da5f856db94
 func main() {
-	fmt.Println(query("a"))
-	fmt.Println(q("a"))
+	query()
 }
