@@ -73,14 +73,8 @@ func query() {
 func insert() {
 
 	//方式3 insert
-	start = time.Now()
 	stm, _ := db.Prepare("INSERT INTO user(uid,username,age) values(?,?,?)")
-	for i := 120001; i <= 130000; i++ {
-		//Exec内部并没有去获取连接，为什么效率还是低呢？
 		stm.Exec(i, "user"+strconv.Itoa(i), i-100000)
-	}
 	stm.Close()
-	end = time.Now()
-	fmt.Println("方式3 insert total time:", end.Sub(start).Seconds())
 
 }

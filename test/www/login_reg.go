@@ -16,10 +16,14 @@ func init() {
 var p = fmt.Println
 
 func main() {
-	p(qq("a", "b"))
+	tf := qtf("a", "b")
+	if tf {
+		fmt.Println("ture")
+	}
+
 }
 
-func qq(username, password string) bool {
+func qtf(username, password string) bool {
 	var tf bool
 	//方式1 query 查询数据
 	rows, _ := db.Query("SELECT username FROM user where username=? and password=?", username, password)
@@ -28,4 +32,10 @@ func qq(username, password string) bool {
 		tf = true
 	}
 	return tf
+}
+
+func inster(username, password, gender, avatar string) {
+	stm, _ := db.Prepare("INSERT INTO user(username,password,gender,avatar) values(?,?,?,?)")
+	stm.Exec(username, password, gender, avatar)
+	stm.Close()
 }

@@ -1,11 +1,9 @@
 //
 package main
-
 import (
 	"fmt"
 	"os"
 	"strconv"
-
 	. "./private"
 	"github.com/urfave/cli"
 )
@@ -31,7 +29,6 @@ func Mygen(s string) {
 		Mkdir(mypath)
 		W_file(mypath+myfile, go_main)
 	}
-
 	//建立目录
 	Mkdir(path + "/private")
 	Mkdir(path + "/public")
@@ -41,7 +38,6 @@ func Mygen(s string) {
 	W_file(path+"/private/dir.go", go_src_dir)
 
 }
-
 func igen(s string) {
 	pathname := s
 	Mygen(pathname)

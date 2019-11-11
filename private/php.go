@@ -1,7 +1,6 @@
-package main
+package private 
 
 import (
-	"fmt"
 	"os/exec"
 	"reflect"
 	"strings"
@@ -111,46 +110,9 @@ func Substr(str string, start uint, length int) string {
 	return str[start:end]
 }
 
-//explode() 函数把字符串打散为数组。
-func Explode(delimiter, str string) []string {
-	return strings.Split(str, delimiter)
-}
-
-// StrReplace str_replace()
-func StrReplace(search, replace, subject string, count int) string {
-	return strings.Replace(subject, search, replace, count)
-}
 
 // Exec - Execute an external program
 func Exec(s string) {
 
 	exec.Command(s).Run()
-}
-
-func main() {
-	a := Array("d", "sdaf", "df")
-	aa := [...]string{"a", "b", "c", "d"}
-	people := Array(12, "Steve", "Mark", "David")
-	/* 向切片添加一个元素 */
-	fmt.Println(aa)
-	if InArray(1, people) {
-		fmt.Println("匹配已找到")
-	} else {
-		fmt.Println("匹配未找到")
-	}
-
-	for i := range a {
-		fmt.Println("Array item", i, "is", a[i])
-	}
-	fmt.Println(Date("Y-m-d h:isA"))
-	fmt.Println(Substr("Hello world", 0, 1))
-	//cmd := `echo aksdfjkasdf > D:\\a.txt`
-	cmd := `dir`
-	c := exec.Command("cmd.exe", `/c`+cmd)
-	if err := c.Run(); err != nil {
-		fmt.Println("Error: ", err)
-	}
-	fmt.Println(c.Output())
-	cars := Array(Array("Volvo", 22, 18), Array("BMW", 15, 13), Array("Saab", 5, 2), Array("Land Rover", 17, 15))
-	fmt.Println(cars[0])
 }
