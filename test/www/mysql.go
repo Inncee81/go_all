@@ -2,11 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-	"strconv"
-	"time"
-
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -26,34 +22,23 @@ func main() {
 func update() {
 
 	//方式3 update
-	start = time.Now()
 	stm, _ := db.Prepare("UPdate user set age=? where uid=?")
-	for i := 120001; i <= 130000; i++ {
-		stm.Exec(i, i)
-	}
+		stm.Exec("ii", "df")
 	stm.Close()
-	end = time.Now()
-	fmt.Println("方式3 update total time:", end.Sub(start).Seconds())
 
 }
 
 func delete() {
 	//方式3 delete
-	start = time.Now()
 	stm, _ := db.Prepare("DELETE FROM user WHERE uid=?")
-	for i := 120001; i <= 130000; i++ {
-		stm.Exec(i)
-	}
+		stm.Exec("i")
 	stm.Close()
-	end = time.Now()
-	fmt.Println("方式3 delete total time:", end.Sub(start).Seconds())
 
 }
 
 func query() {
 
 	//方式3 query
-	start = time.Now()
 	tx, _ := db.Begin()
 	defer tx.Commit()
 	rows, _ = tx.Query("SELECT uid,username FROM user")
@@ -66,15 +51,11 @@ func query() {
 		}
 		//fmt.Printf("name:%s ,id:is %d\n", name, id)
 	}
-	end = time.Now()
-	fmt.Println("方式3 query total time:", end.Sub(start).Seconds())
 }
 
 func insert() {
-
 	//方式3 insert
 	stm, _ := db.Prepare("INSERT INTO user(uid,username,age) values(?,?,?)")
-		stm.Exec(i, "user"+strconv.Itoa(i), i-100000)
+		stm.Exec("i", "user","i", "i")
 	stm.Close()
-
 }

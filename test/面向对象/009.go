@@ -28,4 +28,5 @@ func main() {
 	r2.SetColor("go色") // 等价于(&r2).SetColor("绿色"),这里r2不需要传地址，当然，传地址也不错，只是go会自动帮助转换，没有必要
 	fmt.Println("Color of r2 is: ", r2.color)
 	fmt.Println(r2)
+	
 }

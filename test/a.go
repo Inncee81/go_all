@@ -5,6 +5,13 @@ import (
 )
 
 func main() {
-	fmt.Println("hcdaf")
+	switch df {
+	case condition:
+		
+	}
 
+	switch expression {
+	case condition:
+		
+	}
 }
