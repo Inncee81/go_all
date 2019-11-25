@@ -15,10 +15,14 @@ func main() {
 	db := tools.GetDB()
 
 
+
+
 // 创建
   uu := &User{Username: "tizi366", Password: "123456", CreateTime: time.Now().Unix()}
   db.Create(uu)
 
+
+ db.Find(&uss,"username=? and password=?","tizi366","123456")
 
   // 读取
   var us User
