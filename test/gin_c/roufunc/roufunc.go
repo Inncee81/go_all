@@ -1,7 +1,6 @@
 package roufunc
 import (
  "github.com/gin-gonic/gin"
- "fmt"
  "time"
 . "../model"
 "../tools"
@@ -20,7 +19,6 @@ var tf int
 //查询注册账号
 us:=User{}
 db.First(&us,"username=?",username)
-  fmt.Println("查询username为",us)
 //查询不到,便插入账号和密码
   if us==kong{
   uu := &User{Username:username , Password: password, CreateTime: time.Now().Unix()}
@@ -49,7 +47,6 @@ var tf int
 //查询登录账号
 us:=User{}
 db.First(&us,"username=?&&password=?",username,password)
-  fmt.Println("查询查询登录账号:",us)
 //查询不到,表示账号和密码错误
   if us==kong{
     msg="账号或密码错误"
@@ -67,5 +64,7 @@ tf=1
 }
 func GetUser(c *gin.Context) { 
 	c.String(200,"getuser")
+
+
 
 }

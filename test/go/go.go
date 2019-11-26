@@ -1,28 +1,30 @@
 package main
 
-// 导入两个包fmt和time
 import (
-	"fmt"
-	"time"
+    "fmt"
 )
 
-// 定义一个say函数，接受一个字符串参数s
-// 这个函数的作用就是循环打印5次字符串参数s
-func say(s string) {
-	// 循环5次
-	for i := 0; i < 5; i++ {
-		// 协程休眠100毫秒
-		time.Sleep(100 * time.Millisecond)
-		// 打印字符串s
-		fmt.Println(s)
-	}
+// 定义计算斐波拉契数列的函数，通过channel参数c返回每一步的计算结果
+func fibonacci(n int)  {
+var	x,y int64
+    x, y = 0, 1
+    for i := 0; i < n; i++ {
+		// 返回当前计算结果
+		
+		x, y = y, x+y
+		fmt.Println(x)
+    }
+    
+    // 通过close关闭channel
 }
 
-// 入口函数main
 func main() {
-	// 通过go关键词，开启一个新的协程执行say函数
-	go say("world")
-	// main函数继续执行say函数，这里其实是在主协程执行
-	say("hello")
-	fmt.Printf("\n")
+    // 定义int类型的channel,缓冲队列大小是10
+    
+    // 创建一个协程，开始计算数列
+    fibonacci(100)
+    
+    // 通过range关键词，循环遍历channel变量c，从c中读取数据
+    // 如果channel没有数据，就阻塞循环，直到channel中有数据
+    // 如果channel关闭，则退出循环
 }
