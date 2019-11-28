@@ -59,7 +59,7 @@ tf=1
 	c.JSON(200,gin.H{
 		"username": username,
 		"msg":msg,
-		"code":tf,
+    "code":tf,
 	})
 }
 func GetUser(c *gin.Context) { 
