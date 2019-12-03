@@ -1,0 +1,11 @@
+package model
+type {{tname|title}} struct {
+{% for p in qbs %}
+{{ p.Cname|title }} {{ p.Ctype }} `json:"{{p.Cname}}" gorm:"column:{{p.Cname}}"` // {{ p.Comment }}
+    {% endfor %}
+} 
+//设置表名，可以通过给struct类型定义 TableName函数，返回当前struct绑定的mysql表名
+func ({{tname|title}}) TableName() string {
+	//绑定MYSQL表名为{{tname}}
+	return "{{tname}}"
+}

@@ -7,36 +7,10 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	
+	"./qbnt"
+	"github.com/flosch/pongo2"
+	. "../../private"
 )
-
-//在这里User类型可以代表mysql users表
-type User struct {
-	//	Id int64 `gorm:"AUTO_INCREMENT"`
-	ID         int    `gorm:"column:id; PRIMARY_KEY"`
-	Username   string `gorm:"column:username"`
-	Password   string `gorm:"column:password"`
-	CreateTime int64  `gorm:"column:createtime" json:"-"`
-}
-
-
-
-
-
-
-//设置表名，可以通过给struct类型定义 TableName函数，返回当前struct绑定的mysql表名是什么
-func (u User) TableName() string {
-	//绑定MYSQL表名为users
-	return "users"
-}
-
-type Usei struct {
-	Reason string
-	Msg    string
-	Data   []User
-}
-
-var u User
 
 
 func main() {
@@ -56,30 +30,36 @@ func main() {
 	}
 	//延时关闭数据库连接
 	defer db.Close()
-db.LogMode(true)
 var s []string	
 	
 //获取插入记录的Id
+// 数据推荐存在MAP中 ...
+    data := make(map[string]interface{})
+
 
 //因为Pluck函数返回的是一列值，返回结果是slice类型，我们这里只有一个值，所以取第一个值即可。
 db.Raw("show tables;").Pluck("*",&s)
 fmt.Println(s)
 
-// Scan
-type Result struct {
-  COLUMN_NAME string
-  DATA_TYPE string
-  }
-
-//var r []string
-var r []Result
 for _, v := range s {
-	
-	db.Raw("SELECT COLUMN_NAME,DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='?'",v).Scan(&r)
-	//fmt.Println(r)
+qbs:=qbnt.Nnts(v)
+
+data["qbs"] = qbs
+data["tname"] =v 
+tpl, err := pongo2.FromFile(`test\mysql_gen\m.htm`)
+if err != nil {
+	panic(err)
 }
-var rr []Result
-db.Raw("SELECT COLUMN_NAME,DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users'").Scan(&rr)
-	fmt.Println(rr)
+out, err := tpl.Execute(data)
+if err != nil {
+	panic(err)
+}
+fmt.Println(out) // Output: Hello Florian!
+
+//	fmt.Println(qbs)
+W_file(`test\mysql_gen\genapi\` + v + ".go", out )
+
 }
 
+
+}

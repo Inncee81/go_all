@@ -67,17 +67,6 @@ My first name is {{ Structs.0.Name }}. My last name is {{ Structs.1.Name}}.
             <li>{{ p.Pass }}</li>
 		{% endfor %}
 
-{% ifequal Year List.2 %}
-	<h1>标签比较两个值，当他们相等时，显示在 {% ifequal %} 和 {% endifequal %} 之中所有的值</h1>
-{% else %}
-    <h1>和 {% if %} 类似， {% ifequal %} 支持可选的 {% else%} 标签</h1>	
-{% endifequal %}
-
-
-{{ var|title }}
-
-		
-
 `)
 if err != nil {
 	panic(err)
