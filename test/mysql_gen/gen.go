@@ -41,6 +41,8 @@ var s []string
 db.Raw("show tables;").Pluck("*",&s)
 fmt.Println(s)
 
+
+Mkdir(`test\mysql_gen\genapi`)
 for _, v := range s {
 qbs:=qbnt.Nnts(v)
 
@@ -57,7 +59,7 @@ if err != nil {
 fmt.Println(out) // Output: Hello Florian!
 
 //	fmt.Println(qbs)
-W_file(`test\mysql_gen\genapi\` + v + ".go", out )
+W_file(`test\mysql_gen\genapi\ `  + v + ".go", out )
 
 }
 
