@@ -8,9 +8,30 @@ p    {color: red;}
 </style>
 </head>
 <body>
+ <h1> My first name is {{ Structs.0.Name }}. My last name is {{ Structs.1.Name}}. </h1>
+{%if True%} true{% endif %}
+{%if True and False %}true and false{% endif %}
+{%if True or False %}true or false{% endif %}
+{% if False %}
+ <h2>  ... display 1 </h2>
+{% elif True %}
+ <h2>  ... display 2 </h2>
+{% else %}
+ <h2>  ... display 3 </h2>
+{% endif %}
 
-<h1>{{message}}--h1</h1>
-<p>{{message}}--p</p>
+{# 这是注释 for的用法 可以嵌套使用 {% for %} 标签 #}
+  {% for p in Structs %}
+            <li>{{ p.Name }}</li>
+            <li>{{ p.Pass }}</li>
+		{% endfor %}
 
+  data["array"]=  tools.Array(12, "Steve", "Mark", "David",true)       
+{% for t in array%}
+ <li>{{ t }}</li>
+ {% if t == true%}
+这是true: {{t}}
+ {% endif%}
+{% endfor%}
 </body>
 </html>

@@ -36,7 +36,6 @@ func qtf(username, password string) bool {
 }
 
 
-表名(列名.值, )
 
 func inster(username, password, createtime, avatar_src string,gender int) {
 	stm, _ := db.Prepare("INSERT INTO users(username, password, createtime, avatar_src,gender) values(?,?,?,?,?)")

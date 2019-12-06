@@ -42,13 +42,13 @@ db.Raw("show tables;").Pluck("*",&s)
 fmt.Println(s)
 
 
-Mkdir(`test\mysql_gen\genapi`)
+Mkdir(`test\mysql_gen\model`)
 for _, v := range s {
 qbs:=qbnt.Nnts(v)
 
 data["qbs"] = qbs
 data["tname"] =v 
-tpl, err := pongo2.FromFile(`test\mysql_gen\m.htm`)
+tpl, err := pongo2.FromFile(`test\mysql_gen\tpl\m.htm`)
 if err != nil {
 	panic(err)
 }
@@ -59,7 +59,7 @@ if err != nil {
 fmt.Println(out) // Output: Hello Florian!
 
 //	fmt.Println(qbs)
-W_file(`test\mysql_gen\genapi\ `  + v + ".go", out )
+W_file(`test\mysql_gen\model\ `  + v + ".go", out )
 
 }
 

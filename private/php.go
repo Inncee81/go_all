@@ -1,7 +1,6 @@
 package private 
 
 import (
-	"os/exec"
 	"reflect"
 	"strings"
 	"time"
@@ -110,9 +109,3 @@ func Substr(str string, start uint, length int) string {
 	return str[start:end]
 }
 
-
-// Exec - Execute an external program
-func Exec(s string) {
-
-	exec.Command(s).Run()
-}
