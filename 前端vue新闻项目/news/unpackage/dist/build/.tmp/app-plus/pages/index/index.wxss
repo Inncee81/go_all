@@ -1,0 +1,85 @@
+
+.list{
+		/* border:1px solid #000000; */
+}
+.ls{
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-orient: horizontal;
+				-webkit-box-direction: normal;
+				-webkit-flex-direction: row;
+				    -ms-flex-direction: row;
+				        flex-direction: row;
+					-webkit-box-pack:justify;
+					-webkit-justify-content:space-between;
+					    -ms-flex-pack:justify;
+					        justify-content:space-between;
+				margin-left: 20rpx;
+				margin-right: 20rpx;
+}
+.wl{
+				 display: -webkit-box;
+				 display: -webkit-flex;
+				 display: -ms-flexbox;
+				 display: flex;
+				 -webkit-box-orient: vertical;
+				 -webkit-box-direction: normal;
+				 -webkit-flex-direction: column;
+				     -ms-flex-direction: column;
+				         flex-direction: column;
+				 	-webkit-box-pack:justify;
+				 	-webkit-justify-content:space-between;
+				 	    -ms-flex-pack:justify;
+				 	        justify-content:space-between;
+				 width: 460rpx;
+				 height: 200rpx;
+				  /* border:1px solid #000000; */
+				  margin-top: 20rpx;
+				 margin-bottom: 20rpx;
+}
+.wh{
+			 				width: 220rpx;
+			 				 height: 200rpx;
+							 
+			 				  /* border:1px solid #000000; */
+			 				  margin-top: 20rpx;
+			 				 margin-bottom: 20rpx;
+}
+.gd{
+				 display: -webkit-box;
+				 display: -webkit-flex;
+				 display: -ms-flexbox;
+				 display: flex;
+				 -webkit-box-orient: horizontal;
+				 -webkit-box-direction: normal;
+				 -webkit-flex-direction: row;
+				     -ms-flex-direction: row;
+				         flex-direction: row;
+				 	-webkit-box-pack:start;
+				 	-webkit-justify-content:flex-start;
+				 	    -ms-flex-pack:start;
+				 	        justify-content:flex-start;
+}
+.img{
+				     max-width:100%;  
+					 max-height: 100%;
+}
+.t1{
+				
+				 font-size: 24rpx;
+}
+.t2{
+				font-weight:bold;
+				 line-height: 52rpx;
+			 	 font-size: 34rpx;
+				 text-align: justify;
+}
+.left{
+				 padding-left:30rpx;
+}
+.text{
+			 					 text-align: justify;
+}
+

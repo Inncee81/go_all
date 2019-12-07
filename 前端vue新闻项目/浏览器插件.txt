@@ -1,0 +1,47 @@
+扩展程序图标
+CSS Peeper
+0.4.0
+Extract CSS and build beautiful styleguides.
+ID：mbnbehikldjhnfehhnaidhjhoofhpehk
+查看视图
+背景页 （无效）
+
+扩展程序图标
+dotEPUB
+1.2.3
+Convert any webpage into an e-book
+ID：okpfiebkkmjcnodegbbbiellepfhoglm
+查看视图
+background.html
+
+扩展程序图标
+OneTab
+1.18
+节省高达95％的内存，并减轻标签页混乱现象
+ID：chphlpgkkbolifaimnlloiipkdnihall
+查看视图
+背景页
+
+扩展程序图标
+Page Ruler
+1.0.4
+Draw a ruler to get pixel dimensions and positioning, and measure elements on any web page.
+ID：emliamioobfffbgcfdchabfibonehkme
+查看视图
+背景页
+
+扩展程序图标
+Save to Pocket
+3.0.6.8
+捕获文章、视频等内容的最轻松、快捷方式。
+ID：niloccemoadcdkdjlinkgdfekeahmflj
+查看视图
+背景页
+
+扩展程序图标
+Wappalyzer
+5.8.5
+Identify web technologies
+ID：gppongmhjkpfnbhagpmjfkannfbllamg
+查看视图
+html/background.html

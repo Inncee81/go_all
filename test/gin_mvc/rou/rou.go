@@ -16,6 +16,6 @@ func init() {
 	
 r.GET("/", Index)
 
-r.Run(":8095")
+r.Run(":8096")
 
 }

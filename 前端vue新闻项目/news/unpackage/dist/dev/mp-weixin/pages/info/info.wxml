@@ -1,0 +1,1 @@
+<view class="ls"><view class="t2">{{title}}</view><view class="gd"><view>{{author_name}}</view><view class="left">{{created_at}}</view></view><rich-text class="richText text" nodes="{{strings}}"></rich-text></view>

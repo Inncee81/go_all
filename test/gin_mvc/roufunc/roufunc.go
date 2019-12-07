@@ -9,9 +9,16 @@ _"../model"
 //获取DB初始化
 var db=tools.GetDB()
 
+//封装传递运行
+func Run(c *gin.Context,data map[string]interface{},src string ) {
+ sdata:=tools.Tpl(data,src)
+ c.Header("Content-Type", "text/html; charset=utf-8")
+ c.String(200,sdata)
+}
+
 //路由跳转mvc
 func Index(c *gin.Context) {
- data:=make(map[string]interface{})
+ 	data:=make(map[string]interface{})
     data["array"]=  tools.Array(12, "Steve", "Mark", "David",true)
     data["Name"] = "nljb"
     data["Email"] = "nljb@qq.com"
@@ -42,8 +49,5 @@ func Index(c *gin.Context) {
     data["var"] = "hello world !!!"
 
 	data["maps"] = map[string]string{"name": "golang"}
-	
- sdata:=tools.Tpl(data,`test\gin_mvc\tpl\index.htm`)
- c.Header("Content-Type", "text/html; charset=utf-8")
- c.String(200,sdata)
+	Run(c,data,`test\gin_mvc\tpl\index.htm`)
 }

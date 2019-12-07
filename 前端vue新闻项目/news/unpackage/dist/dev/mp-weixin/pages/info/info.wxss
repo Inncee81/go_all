@@ -1,0 +1,39 @@
+
+.t2{
+					font-weight:bold;
+					 line-height: 70rpx;
+				 	 font-size: 54rpx;
+										 text-align: justify;
+}
+.text{
+					 text-align: justify;
+					 FONT-SIZE:36rpx;
+					 LINE-HEIGHT:54rpx;
+}
+.ls{
+					
+					margin-left: 20rpx;
+					margin-right: 20rpx;
+}
+.gd{
+									 display: -webkit-box;
+									 display: -webkit-flex;
+									 display: -ms-flexbox;
+									 display: flex;
+									 -webkit-box-orient: horizontal;
+									 -webkit-box-direction: normal;
+									 -webkit-flex-direction: row;
+									     -ms-flex-direction: row;
+									         flex-direction: row;
+									 	-webkit-box-pack:start;
+									 	-webkit-justify-content:flex-start;
+									 	    -ms-flex-pack:start;
+									 	        justify-content:flex-start;
+									color: #777777;
+									margin-top: 20rpx;
+									margin-bottom: 20rpx;
+}
+.left{
+									 padding-left:30rpx;
+}
+
