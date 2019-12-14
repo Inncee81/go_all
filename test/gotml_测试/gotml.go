@@ -50,6 +50,7 @@ func main() {
   // Compile the template first (i. e. creating the AST)
 tpl, err := pongo2.FromString(`
 My first name is {{ Structs.0.Name }}. My last name is {{ Structs.1.Name}}.
+这是:{{User.Name}}
 {%if True%}true{% endif %}
 {%if True and False %}true and false{% endif %}
 {%if True or False %}true or false{% endif %}

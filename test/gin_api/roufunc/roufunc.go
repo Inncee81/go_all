@@ -1,13 +1,15 @@
 package roufunc
 import (
  "github.com/gin-gonic/gin"
- "time"
+_ "time"
 . "../model"
 "../tools"
+"fmt"
 )
 //获取DB初始化
-var db=tools.GetDB()
+ var db=tools.GetDB()
 
+/*
 // 用户注册
 func Uregister(c *gin.Context) {
         // 获取post请求参数
@@ -62,8 +64,18 @@ tf=1
     "code":tf,
 	})
 }
-func GetUser(c *gin.Context) { 
-	c.String(200,"getuser")
+
+*/
+
+func Getlist(c *gin.Context) { 
+
+bt := c.Param("bt")
+
+fmt.Println("-----------",bt)
+  ab :=[] Bt_list{}
+db.Where("name like ?","%"+bt+"%").Find(&ab)
+   c.JSON(200,ab)
+
 
 
 

@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>handlebars.js 模板引擎</title>
+<link href="https://cdn.bootcss.com/vis/4.21.0/vis.min.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"> </script>
+<style type="text/css">
+</style>
+</head>
+<body>
+
+<script id="tpl" type="text/x-handlebars-template">
+{{#each this}}
+
+    <div>
+        <h1>{{infohash}}</h1>
+    </div>
+{{/each}}
+
+
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script>
+$(function () {
+  var ss='';
+  var tpl   =  $("#tpl").html();
+  var template = Handlebars.compile(tpl);
+
+    $.get("http://127.0.0.1:8060/btlist/1",function(data,status){
+      //获取data中的Files字段
+ var newd = JSON.stringify(data,['Files']);
+ console.log(newd);
+//json字符串转化成json对象
+ var snewd = eval('(' + newd+ ')');
+
+  var newObject=[];
+console.log("snewd--",snewd.length);
+
+for (var i = 0; i <snewd.length; i++) {
+  //console.log(snewd[i].Files);
+  var item= snewd[i].Files;
+var items=JSON.parse(item);
+  //JSON.stringify(item);
+  //console.log(item);
+  newObject.push(items);
+//console.log(snewd[i].Files);
+}
+//JSON.stringify(newObject);
+console.log(newObject);
+    var html = template(newObject);
+    console.log(html);
+    $('body').html(html);
+
+    //alert(html)
+
+
+		});
+
+
+});
+</script>
+</body>
+</html>
