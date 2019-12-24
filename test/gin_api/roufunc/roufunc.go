@@ -1,82 +1,46 @@
 package roufunc
+
 import (
- "github.com/gin-gonic/gin"
-_ "time"
-. "../model"
-"../tools"
-"fmt"
+	"strconv"
+	"fmt"
+	_ "time"
+
+	. "../model"
+	"../tools"
+	"github.com/gin-gonic/gin"
 )
+
 //获取DB初始化
- var db=tools.GetDB()
+var db = tools.GetDB()
 
-/*
-// 用户注册
-func Uregister(c *gin.Context) {
-        // 获取post请求参数
-	username := c.PostForm("username")
-	password := c.PostForm("password")
-var msg string
-var tf int
- kong := User{};
-//查询注册账号
-us:=User{}
-db.First(&us,"username=?",username)
-//查询不到,便插入账号和密码
-  if us==kong{
-  uu := &User{Username:username , Password: password, CreateTime: time.Now().Unix()}
-  db.Create(uu)
-  msg="账号注册成功"
-tf=1
-  }else{
-    msg="账号或密码已存在"
-    tf=0
-  }
-
-	c.JSON(200,gin.H{
-		"username": username,
-		"msg":msg,
-		"code":tf,
-	})
+type Gjson struct {
+	Btlist []Bt_list
+	Len    int
+	Pag    string
 }
 
-//用户登录
-func Ulogin(c *gin.Context) {
-	username := c.PostForm("username")
-	password := c.PostForm("password")
-var msg string
-var tf int
- kong := User{};
-//查询登录账号
-us:=User{}
-db.First(&us,"username=?&&password=?",username,password)
-//查询不到,表示账号和密码错误
-  if us==kong{
-    msg="账号或密码错误"
-    tf=0
-  }else{
-  msg="账号密码正确"
-tf=1
-  }
+var gj Gjson
 
-	c.JSON(200,gin.H{
-		"username": username,
-		"msg":msg,
-    "code":tf,
-	})
-}
+func Getlist(c *gin.Context) {
 
-*/
+	bt := c.Param("bt")
+	pag := c.Param("pag")
+	total := 0
+	fmt.Println("-----------", bt)
+	ab := []Bt_list{}
+	db.Where("name like ?", "%"+bt+"%").Find(&ab).Count(&total)
+	//等价于: SELECT count(*) FROM `foods`
+	//这里也需要通过model设置模型，让gorm可以提取模型对应的表名
+	fmt.Println(total)
 
-func Getlist(c *gin.Context) { 
-
-bt := c.Param("bt")
-
-fmt.Println("-----------",bt)
-  ab :=[] Bt_list{}
-db.Where("name like ?","%"+bt+"%").Find(&ab)
-   c.JSON(200,ab)
-
-
-
+	abp := []Bt_list{}
+	n,_:=strconv.Atoi(pag)	
+	npag:=(n-1)*12
+	spag :=strconv.Itoa(npag)
+	db.Where("name like ?", "%"+bt+"%").Limit("12").Offset(spag).Find(&abp)
+	gj.Btlist = abp
+	gj.Len = total
+	gj.Pag = pag
+	c.JSON(200, gj)
 
 }

@@ -1,0 +1,18 @@
+My first name is {{ Structs.0.Name |scream }}. My last name is {{ Structs.1.Name}}.
+这是:{{User.Name}}
+{%if True%}true{% endif %}
+{%if True and False %}true and false{% endif %}
+{%if True or False %}true or false{% endif %}
+{% if False %}
+   ... display 1
+{% elif True %}
+   ... display 2
+{% else %}
+   ... display 3
+{% endif %}
+{{num | scream}}
+{# 这是注释 for的用法 可以嵌套使用 {% for %} 标签 #}
+  {% for p in Structs %}
+            <li>{{ p.Name }}</li>
+            <li>{{ p.Pass | scream }}</li>
+		{% endfor %}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <!--IE-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>  {{info.name}}- 磁力山</title>
+  <meta name="keywords" content="  {{info.name}},磁力下载,种子下载,bt下载,magnet,torrent" />
+  <meta name="description" content="磁力文件{{info.name}}创建于{{time}},大小为{{zlen | scream}},包含{{znum}}个文件" />
+  <link href="../static/css/base.css" rel="stylesheet" />
+
+  <link rel="shortcut icon" href="/favicon.ico" />
+<script type='text/javascript' src="https://cdn.staticfile.org/clipboard.js/1.5.15/clipboard.min.js"></script>
+
+ </head>
+ <body>
+  <div id="wrapper" class="Information_outer_container">
+   <div id="head">
+    <div id="Header_wrapper_other_style">
+     <div id="Header_logo">
+      <a href="/" data-reactid="5"><img src="../static/img/clilogo.png" alt="磁力山" /></a>
+     </div>
+     <div id="Header_right_nav">
+      <div id="Category_container">
+       <div class="Category_category_nav_wrapper">
+        Ctrl+D 收藏本网站&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+       </div>
+      </div>
+
+     </div>
+    </div>
+   </div>
+   <div id="Information_container" class="container">
+    <div id="Header_wrapper_search_style">
+     <div id="Header_search_form">
+
+              <form action="http://www.ze3.net/btlist.html" name="one" method="get" id="SearchForm_form">
+               <div id="SearchForm_search_input_wapper">
+                <div class="SearchForm_input_wrapper">
+
+                 <input type="text" name="one" value="" autocomplete="off" id="SearchForm_keyword" placeholder="电影、电视剧、动漫、文档..." />
+
+                </div>
+                <input   id="SearchForm_submit_btn_wrapper" type="submit" name="" value="搜索">
+
+             </div>
+              </form>
+     </div>
+    </div>
+    <div class="Information_content_container ">
+     <h1 class="Information_title">     {{info.name}}</h1>
+     <div class="Information_magnet_wrapper Information_box_shadow">
+      <div class="Information_l_title">
+      磁链地址
+       <input id="Information_copy_text" type="text" value="magnet:?xt=urn:btih:{{infohash}}" />
+       <span>复制</span>
+
+      </div>
+
+
+      <div class="Information_l_content">
+       <a href="magnet:?xt=urn:btih:{{infohash}}" class="Information_magnet" id="down-url">magnet:?xt=urn:btih:{{infohash}}</a>
+       <div class="Information_download_tips">
+
+       </div>
+
+       <div class="Content_download_btn">
+        <a href="javascript:;" class="btn" id="copy_text" data-clipboard-action="copy" data-clipboard-target="#Information_copy_text">复制链接</a>
+      </div>
+      </div>
+     </div>
+          <div class="Information_info_wrapper Information_box_shadow">
+
+      <div class="Information_l_title">
+       磁链详情
+      </div>
+      <div class="Information_l_content">
+        文件数目：
+       <b>{{znum}}个文件</b>
+       <br /> 文件大小：
+       <b>{{zlen | scream}}</b>
+       <br /> 收录时间：
+       <b>{{time}}</b>
+            </div>
+     </div>
+     <div class="Information_files_wrapper Information_box_shadow ">
+
+
+
+      <div class="Information_l_title">
+      文件meta
+      </div>
+      <div class="Information_l_content">
+       <ul class="File_list">
+         {% if f %}
+                 {% for p in info.files %}
+                            <li>
+         <div class="File_list_info">
+      {{ p.path.0 }} {{p.path.1}}
+          <div class="File_btn">
+           {{ p.length | scream }}
+          </div>
+
+         </div></li>
+         {% endfor %}
+              {% else %}
+
+              <li>
+              <div class="File_list_info">
+            {{info.name}}
+              <div class="File_btn">
+              {{zlen | scream}}
+              </div>
+
+              </div></li>
+
+
+       {% endif%}
+
+       <!-- Target -->
+
+           </ul>
+      </div>
+     </div>
+     <div class="pb-60"></div>
+    </div>
+   </div>
+  </div>
+  <div id="Bottom_bottom">
+   <div class="Bottom_wrapper">
+    <div>
+      &copy;2019 ze3.net 磁力山 v1.0
+    </div>
+    <a style="color:#555;" target="_blank" href="http://www.ze3.net">磁力搜索</a>
+    <span class="Bottom_separator">|</span>
+    <a style="color:#555;" target="_blank" href="http://www.ze3.net">磁力山</a>
+   </div>
+  </div>
+  <script>
+        // button的class的值
+         var clipboard = new Clipboard('.btn');
+         clipboard.on('success', function(e) {
+             alert("复制磁链成功")
+         });
+
+         clipboard.on('error', function(e) {
+         });
+     </script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?372c06f222714ee06160653772e0d561";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+     
+     </body>
+</html>

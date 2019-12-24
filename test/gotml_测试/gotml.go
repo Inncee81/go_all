@@ -1,13 +1,32 @@
 package main
 import (
 	"fmt"
-	"github.com/flosch/pongo2"
+  "github.com/flosch/pongo2"
+  "strings"
 )
 
 type ts struct {
 Name string	
 Cap string
 }
+
+func init() {
+    pongo2.RegisterFilter("scream", Scream)
+}
+
+func Scream(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
+    if !in.IsString() {
+        return nil, &pongo2.Error{ }
+    }
+
+    s := in.String()
+
+    
+    s = strings.ToUpper(s)
+
+    return pongo2.AsValue(s), nil
+}
+
 
 func main() {
 	
@@ -49,7 +68,7 @@ func main() {
     // 执行
   // Compile the template first (i. e. creating the AST)
 tpl, err := pongo2.FromString(`
-My first name is {{ Structs.0.Name }}. My last name is {{ Structs.1.Name}}.
+My first name is {{ Structs.0.Name |scream }}. My last name is {{ Structs.1.Name}}.
 这是:{{User.Name}}
 {%if True%}true{% endif %}
 {%if True and False %}true and false{% endif %}
@@ -64,7 +83,7 @@ My first name is {{ Structs.0.Name }}. My last name is {{ Structs.1.Name}}.
 
 {# 这是注释 for的用法 可以嵌套使用 {% for %} 标签 #}
   {% for p in Structs %}
-            <li>{{ p.Name }}</li>
+            <li>{{ p.Name | scream }}</li>
             <li>{{ p.Pass }}</li>
 		{% endfor %}
 

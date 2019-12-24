@@ -28,6 +28,7 @@ type file struct {
 type bitTorrent struct {
 	InfoHash string `json:"infohash"`
 	Name     string `json:"name"`
+	Time 	 string  `json:"time"`
 	Files    []file `json:"files,omitempty"`
 	Length   int    `json:"length,omitempty"`
 }
@@ -70,6 +71,9 @@ func mysql(name,files,infohash string){
 func main() {
 fmt.Println(tf("abc"))
 
+var zlen int
+var znum  int 
+
 
 	go func() {
 		http.ListenAndServe(":6060", nil)
@@ -91,9 +95,11 @@ fmt.Println(tf("abc"))
 			bt := bitTorrent{
 				InfoHash: hex.EncodeToString(resp.InfoHash),
 				Name:     info["name"].(string),
+				Time: 		tools.Date("Y-m-d"),
 			}
 
 			if v, ok := info["files"]; ok {
+				dx :=0
 				files := v.([]interface{})
 				bt.Files = make([]file, len(files))
 
@@ -103,9 +109,16 @@ fmt.Println(tf("abc"))
 						Path:   f["path"].([]interface{}),
 						Length: f["length"].(int),
 					}
+					dx += f["length"].(int)
+					znum++
 				}
+			bt.Length =	dx
+			zlen =dx
+
 			} else if _, ok := info["length"]; ok {
 				bt.Length = info["length"].(int)
+				zlen =bt.Length
+				znum=1
 			}
 
 			data, err := json.Marshal(bt)
@@ -113,7 +126,7 @@ fmt.Println(tf("abc"))
 		
 			infohash := fmt.Sprintf("%s",hex.EncodeToString(resp.InfoHash))
 
-if (! tf(infohash)){
+			if (! tf(infohash)){
 
  			d :=make(map[string]interface{})
 			 fmt.Printf("%s\n",info["name"])
@@ -122,20 +135,26 @@ if (! tf(infohash)){
 			 fmt.Println("bt-----",bt)
 	d["info"]=info
 	d["infohash"]=infohash
-	if info["files"]=="" {
-		d["f"]=true
+	d["files"]=bt.Files
+	d["time"]= tools.Date("Y-m-d")
+	d["zlen"]= zlen
+	d["znum"]=znum
+	if len(bt.Files) >1 {
+d["f"]=true
 	}else{
-		d["f"]=false
-		
+d["f"]=false
 	}
+	fmt.Println("bt.Files",bt.Files)
 
 
 
 //{"infohash":"4dcba1163b9214731bf25090218394c48e372c8b","name":"[ThZu.Cc]stepsiblingscaught_my_step_sisters_gift_1920","files":[{"path":["[ThZu.Cc]stepsiblingscaught_my_step_sisters_gift_1920.mp4"],"length":2499086931},{"path":["thzkk.com.url"],"length":125},{"path":["桃花族地址发布器.chm"],"length":17100}]}
 
-	path :=`test\dht-master\sample\spider\cili\slist.html`
+	path :=`test\dht-master\sample\spider\cili\info.html`
 	sdatas := tools.Tpl(d,path)
-	tools. W_file(`test\dht-master\sample\spider\html\a.html`, sdatas)
+	genpath := "test/dht-master/sample/spider/html/"
+	filename := infohash + ".html"
+	tools.W_file(genpath+filename, sdatas)
 
 
 				mysql(info["name"].(string),json,infohash)
