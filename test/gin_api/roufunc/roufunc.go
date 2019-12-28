@@ -27,12 +27,16 @@ func Getlist(c *gin.Context) {
 	pag := c.Param("pag")
 	total := 0
 	fmt.Println("-----------", bt)
-	ab := []Bt_list{}
-	db.Where("name like ?", "%"+bt+"%").Find(&ab).Count(&total)
-	//等价于: SELECT count(*) FROM `foods`
-	//这里也需要通过model设置模型，让gorm可以提取模型对应的表名
-	fmt.Println(total)
 
+
+if pag == "1" {
+var titles []string
+
+db.Where("name like ?", "%"+bt+"%").Model(Bt_list{}).Pluck("id", &titles).Count(&total)
+
+	
+	fmt.Println(total)	
+} 
 	abp := []Bt_list{}
 	n,_:=strconv.Atoi(pag)	
 	npag:=(n-1)*12
