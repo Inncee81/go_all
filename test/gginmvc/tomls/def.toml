@@ -1,0 +1,16 @@
+#标题
+title = "mvc配置"
+
+[db]
+username = "root"  #账号
+	password = "root"  #密码
+	host = "127.0.0.1" #数据库地址，可以是Ip或者域名
+	port = 3306        #数据库端口
+	Dbname = "cms"     #数据库名
+	timeout = "10s"    #连接超时，10秒
+#网站路由
+[rou]
+roufunc =  [
+  "gamma", 
+  "delta"
+]

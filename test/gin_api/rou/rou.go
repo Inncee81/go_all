@@ -17,7 +17,9 @@ func init() {
 	//r.POST("/user/register", Uregister)
 
 	r.GET("/btlist/:bt/:pag/", Getlist)
+	r.GET("/api/CheckToken/:name/:pass/", CheckToken)
+	r.GET("/api/RegToken/:name/:pass/", RegToken)
 
-	r.Run(":8060")
+	r.Run(":8062")
 
 }
