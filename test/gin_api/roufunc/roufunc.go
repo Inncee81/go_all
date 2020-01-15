@@ -3,7 +3,7 @@ package roufunc
 import (
 	"fmt"
 	"strconv"
-	_ "time"
+	 "time"
 
 	. "../model"
 	"../tools"
@@ -14,11 +14,24 @@ import (
 //获取DB初始化
 var db = tools.GetDB()
 
+//获取 redis 初始化
+var client=tools.GetRS()
+
 type Gjson struct {
 	Btlist []Bt_list
 	Len    int
 	Pag    string
 }
+
+type GGjson struct {
+	Code int `json:"code"`
+	Data struct {
+		Gjsons Gjson
+	} `json:"data"`
+	Msg string `json:"msg"`
+}
+
+
 
 type Tjson struct {
 	Code int `json:"code"`
@@ -28,14 +41,31 @@ type Tjson struct {
 	Msg string `json:"msg"`
 }
 
-var gj Gjson
-var tj Tjson
 
+type Rjson struct {
+	Code int `json:"code"`
+		Msg string `json:"msg"`
+}
+
+
+var gj Gjson
+var ggjson GGjson
+var tj Tjson
+var rj Rjson
+ 
 func Getlist(c *gin.Context) {
+
+
+
 
 	bt := c.Param("bt")
 	pag := c.Param("pag")
-	total := 0
+	username := c.Param("username")
+	token := c.PostForm("token")
+	isapi :=RegToken(username,token)
+	if isapi{
+		
+total := 0
 	fmt.Println("-----------", bt)
 
 	if pag == "1" {
@@ -52,50 +82,109 @@ func Getlist(c *gin.Context) {
 	gj.Btlist = abp
 	gj.Len = total
 	gj.Pag = pag
-	c.JSON(200, gj)
+
+	ggjson.Code=200
+	ggjson.Msg="数据请求成功"
+	ggjson.Data.Gjsons=gj
+
+	}else{
+	ggjson.Code=400
+	ggjson.Msg="无权限访问"
+	ggjson.Data.Gjsons=Gjson{}
+	}
+	
+	c.JSON(200, ggjson)
 
 }
 
-func CheckToken(c *gin.Context) {
-	username := c.Param("name")
-	password := c.Param("pass")
-	var us User
-	db.Select("id").Where(User{Username: username, Password: password}).First(&us)
-	if us.ID > 0 {
-		tj.Code = 200
-		//假数据
-		tj.Data.Token = "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QxMjM0NTYiLCJleHAiOjE1MTg3MjAwMzcsImlzcyI6Imdpbi1ibG9nIn0.-kK0V9E06qTHOzupQM_gHXAGDB3EJtJS4H5TTCyWwW8"
-		tj.Msg = "ok"
-	} else {
+
+//登录时输入账号和密码 返回生成的唯一token
+func LoginToken(c *gin.Context) {
+	db.LogMode(true)
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
+	fmt.Println(username,password)
+	us := User{}
+	isNotFound := db.Debug().Where("username=? and password=?", username,password).First(&us).RecordNotFound()
+	if isNotFound {
 		tj.Code = 400
 		tj.Data.Token = ""
-		tj.Msg = "授权失败"
+		tj.Msg = "登录失败"
+	}else{
+		tj.Code = 200
+		tj.Data.Token,_ = GenerateToken(username)
+		tj.Msg = "登录成功"
+
+		
+
 	}
 	c.JSON(200, tj)
+}
+
+//用户注册该用户不存在就注册
+func Register(c *gin.Context) {
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+if username=="" || password=="" {
+	rj.Msg ="注册用户名或密码不能为空"
+	rj.Code=402
+}
+ if Isreg(username)  {
+	rj.Msg ="该用户已存在"
+	rj.Code=401
+} else {
+//定义一个用户，并初始化数据
+	u := User{
+		Username:username,
+		Password:password,
+		CreateTime:time.Now().Unix(),
+	}
+
+	//插入一条用户数据
+		if err := db.Create(&u).Error; err != nil {
+		fmt.Println("插入失败", err)
+		rj.Msg="数据插入失败"
+		rj.Code=400
+	}else{
+		rj.Msg="用户注册成功"
+		rj.Code=200
+	}
+	
+	}
+c.JSON(200,rj) 
 
 }
 
-func RegToken(c *gin.Context) {
-	username := c.Param("name")
-	password := c.Param("pass")
-	var us User
-	us = User{Username: username, Password: password}
-	db.Select("id").Where(User{Username: username, Password: password}).First(&us)
-	if us.ID > 0 {
-	} else {
-		GenerateToken(us)
-		c.STRING(200,us)
+//是否注册
+func Isreg(username string) (bool) {
+u := User{}
+isFound := db.Where("username = ?", username).First(&u).RecordNotFound()
+	if !isFound {
+		return true
+	}else{
+		return false
+		
 	}
-	c.JSON(200, tj)
-	c.STRING(200,us)
-
 }
 
-func GenerateToken(user User) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": user.Username,
-		//"exp":      time.Now().Add(time.Hour * 2).Unix(),// 可以添加过期时间
-	})
 
-	return token.SignedString([]byte("secret")) //对应的字符串请自行生成，最后足够使用加密后的字符串
+//api权限 用户名和token 
+func RegToken(username,token string) (bool) {
+  // 获取post请求参数
+	G,_:=GenerateToken(username)
+	if G==token {
+		return true
+	}
+return false
+}
+
+
+//SignWxToken 生成token,uid用户id，expireSec过期秒数
+func GenerateToken(username string) (tokenStr string, err error) {
+   token :=jwt.NewWithClaims(jwt.SigningMethodHS256,jwt.MapClaims{
+"username":username,
+})
+tokenStr,err =token.SignedString([]byte("key"))
+    return tokenStr, err
 }

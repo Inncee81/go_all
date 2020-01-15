@@ -16,9 +16,9 @@ func init() {
 	// 路由定义post请求, url路径为：/user/login, 绑定
 	//r.POST("/user/register", Uregister)
 
-	r.GET("/btlist/:bt/:pag/", Getlist)
-	r.GET("/api/CheckToken/:name/:pass/", CheckToken)
-	r.GET("/api/RegToken/:name/:pass/", RegToken)
+	r.POST("/btlist/:bt/:pag/:username/", Getlist)
+	r.POST("/api/login/", LoginToken)
+	r.POST("/api/register/", Register)
 
 	r.Run(":8062")
 
